@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sayı Tahmin Oyunu</title>
+<style>
+body {
+    background: #171923;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    padding: 40px 15px;
+}
+.container {
+    max-width: 400px;
+    margin: auto;
+    background: #252a3a;
+    padding: 25px;
+    border-radius: 15px;
+}
+input, button {
+    padding: 12px;
+    margin: 8px;
+    border-radius: 8px;
+    border: none;
+}
+button {
+    background: #6c63ff;
+    color: white;
+    cursor: pointer;
+}
+#mesaj { margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>🎯 Sayı Tahmin Oyunu</h1>
+<p>1 ile 10 arasında bir sayı tuttum lan amcık!</p>
+<p>5 tahmin hakkın var anasınu siktiğimin malı.</p>
+
+<input type="number" id="tahmin" min="1" max="10"
+placeholder="Tahminini gir amını sikerim">
+
+<button onclick="kontrol()">Tahmin et</button>
+
+<h3 id="mesaj">Hadi başlayak amcık!</h3>
+<p id="hak">Kalan hak: 5</p>
+
+<button onclick="yenidenBaslat()">Yeniden oyna</button>
+</div>
+
+<script>
+let sayi;
+let hak;
+
+function yenidenBaslat() {
+    sayi = Math.floor(Math.random() * 10) + 1;
+    hak = 5;
+    document.getElementById("mesaj").textContent = "Yeni oyun başladı!";
+    document.getElementById("hak").textContent = "Kalan hakkın: 5";
+    document.getElementById("tahmin").disabled = false;
+}
+
+function kontrol() {
+    let girdi = Number(document.getElementById("tahmin").value);
+
+    if (girdi < 1 || girdi > 10 || !Number.isInteger(girdi)) {
+        document.getElementById("mesaj").textContent = "1 ile 10 arasında tam sayı gir!";
+        return;
+    }
+
+    if (hak <= 0) return;
+
+    if (girdi === sayi) {
+        document.getElementById("mesaj").textContent = "AFFERİM LANN SAYIYI BULDUN YARRAMMIN KAFFFASII 🎉";
+        document.getElementById("tahmin").disabled = true;
+        return;
+    }
+
+    hak--;
+
+    if (hak === 0) {
+        document.getElementById("mesaj").textContent = "SEN ANCA YARRAMI BULURSUN PUHAHAHHA Sayı: " + sayi;
+        document.getElementById("tahmin").disabled = true;
+    } else if (girdi > sayi) {
+        document.getElementById("mesaj").textContent = "Daha küçük sayı daha küçük.Kaşarrın evladı !";
+    } else {
+        document.getElementById("mesaj").textContent = "DAHA BÜYÜK AMK DAHA BÜYÜK KAFAYI YİCEM!";
+    }
+
+    document.getElementById("hak").textContent = "Kalan hak: " + hak;
+}
+
+yenidenBaslat();
+</script>
+
+</body>
+</html>
